@@ -9,7 +9,7 @@ const schema = yup.object({
   name: yup
     .string()
     .required("name is required")
-    .min(8, "name must be at least 8 characters")
+    .min(2, "name must be at least 2 characters")
     .max(30, "name must be maximum 30 characters")
     .test(
       "includes-space",
