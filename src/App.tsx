@@ -36,7 +36,7 @@ const schema = yup.object({
     .test(
       "year validation",
       "year must be valid",
-      (value) => parseInt(value) >= 24 && parseInt(value) <= 40
+      (value) => parseInt(value) >= 25 && parseInt(value) <= 40
     ),
   cvc: yup
     .string()
