@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
+import { Inputs } from "./types/form";
 import CardPreview from "./components/CardPreview";
 import CardForm from "./components/CardForm";
 import SuccessState from "./components/SuccessState";
@@ -80,14 +81,6 @@ const schema = yup.object({
     .required("cvc is required")
     .min(3, "cvc must be at least 3 characters"),
 });
-
-interface Inputs {
-  name: string;
-  cardNumber: string;
-  mm: string;
-  yy: string;
-  cvc: string;
-}
 
 function App() {
   const {

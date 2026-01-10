@@ -1,15 +1,8 @@
 import { UseFormRegister, FieldErrors, UseFormSetValue } from "react-hook-form";
 import InputMask from "react-input-mask";
 import { SubmitHandler } from "react-hook-form";
+import { Inputs } from "../types/form";
 import "./CardForm.css";
-
-interface Inputs {
-  name: string;
-  cardNumber: string;
-  mm: string;
-  yy: string;
-  cvc: string;
-}
 
 interface CardFormProps {
   register: UseFormRegister<Inputs>;
