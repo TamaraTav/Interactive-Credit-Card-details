@@ -7,6 +7,25 @@ import CardPreview from "./components/CardPreview";
 import CardForm from "./components/CardForm";
 import SuccessState from "./components/SuccessState";
 
+// Dynamic year validation
+// YY format: 2-digit year (00-99)
+// % 100 აბრუნებს ბოლო 2 ციფრს (ნაშთს 100-ზე გაყოფისას)
+// მაგალითად: 2024 % 100 = 24, 2100 % 100 = 0
+const getCurrentYearYY = () => {
+  return new Date().getFullYear() % 100;
+};
+
+const getMaxYearYY = () => {
+  const currentYear = new Date().getFullYear();
+  const maxYear = currentYear + 15; // მომავალი 15 წელი (credit card expiration max)
+  // პრაქტიკაში 2100, 2200, 2300 არ იქნება valid, რადგან ძალიან შორს არის
+  // ამიტომ % 100 safe-ია ამ კონტექსტში
+  return maxYear % 100;
+};
+
+const currentYearYY = getCurrentYearYY();
+const maxYearYY = getMaxYearYY();
+
 const schema = yup.object({
   name: yup
     .string()
@@ -37,8 +56,24 @@ const schema = yup.object({
     .min(2, "year must be at least 2 characters")
     .test(
       "year validation",
-      "year must be valid",
-      (value) => parseInt(value) >= 25 && parseInt(value) <= 40
+      `year must be between ${String(currentYearYY).padStart(
+        2,
+        "0"
+      )} and ${String(maxYearYY).padStart(2, "0")}`,
+      (value) => {
+        const yearNum = parseInt(value);
+        if (isNaN(yearNum)) return false;
+
+        // Century transition case: მაგ. currentYearYY = 99, maxYearYY = 14 (2085-2100)
+        // Valid years: 99, 00, 01, ..., 14 (სადაც 00 = 2100, არა 2200, რადგან მხოლოდ 15 წელი მომავალში)
+        if (currentYearYY > maxYearYY) {
+          return yearNum >= currentYearYY || yearNum <= maxYearYY;
+        }
+
+        // Normal case: მაგ. currentYearYY = 24, maxYearYY = 39 (2024-2039)
+        // Valid years: 24-39
+        return yearNum >= currentYearYY && yearNum <= maxYearYY;
+      }
     ),
   cvc: yup
     .string()
