@@ -20,8 +20,19 @@ export default function CardPreview({
 }: CardPreviewProps) {
   const formatCardNumber = (num: string | undefined) => {
     if (!num || num.trim() === "") return "0000 0000 0000 0000";
-    const cleaned = num.replace(/\s/g, "").padEnd(16, "0");
-    return cleaned.match(/.{1,4}/g)?.join(" ") || "0000 0000 0000 0000";
+
+    // წავშალოთ spaces და შევზღუდოთ 16 ციფრამდე
+    const cleaned = num.replace(/\s/g, "").slice(0, 16);
+
+    // თუ ცარიელია შემდეგ slice-ის შემდეგ, დავბრუნოთ default
+    if (cleaned.length === 0) return "0000 0000 0000 0000";
+
+    // გავყოთ 4-4-4-4 ფორმატში, მხოლოდ შევსებული ციფრებისთვის
+    const formatted = cleaned.match(/.{1,4}/g)?.join(" ") || cleaned;
+
+    // თუ ბოლო ბლოკი არ არის 4 ციფრიანი, დავამატოთ spaces მხოლოდ ვიზუალურად
+    // მაგრამ არ დავამატოთ 0-ები
+    return formatted;
   };
 
   const formattedCardNumber = formatCardNumber(cardNumber);
