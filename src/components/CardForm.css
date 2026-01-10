@@ -1,0 +1,153 @@
+.card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 380px;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group-small {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-row .form-group-small {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row .form-group-small > * {
+  flex-shrink: 0;
+}
+
+.form-row .form-group-small label {
+  margin-bottom: 0.5rem;
+  min-height: 2rem;
+  line-height: 1.2;
+  display: flex;
+  align-items: flex-start;
+}
+
+.form-row .form-group-small input,
+.form-row .form-group-small .date-inputs {
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.125rem;
+  text-transform: uppercase;
+  color: var(--deep-violet);
+  margin-bottom: 0.5rem;
+  min-height: 1rem;
+  line-height: 1.2;
+}
+
+.card-form input {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--light-grey);
+  border-radius: 8px;
+  font-size: 1.125rem;
+  font-family: inherit;
+  color: var(--deep-violet);
+  outline: none;
+  transition: border-color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+  height: 3rem;
+}
+
+.card-form input::placeholder {
+  color: var(--light-grey);
+  opacity: 0.6;
+}
+
+.card-form input:focus {
+  border-color: var(--gradient-start);
+  background: linear-gradient(var(--white), var(--white)) padding-box,
+    linear-gradient(to right, var(--gradient-start), var(--gradient-end))
+      border-box;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border: 1px solid transparent;
+}
+
+.card-form input.input-error {
+  border-color: var(--red);
+}
+
+.error-message {
+  color: var(--red);
+  font-size: 0.75rem;
+  margin-top: 0;
+  min-height: 1rem;
+  line-height: 1.2;
+}
+
+.date-inputs {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  height: 3rem;
+}
+
+.date-inputs input {
+  flex: 1;
+  height: 3rem;
+  margin: 0;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 0.9375rem;
+  background-color: var(--deep-violet);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1.125rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.submit-button:hover {
+  background-color: var(--very-dark-violet);
+}
+
+.submit-button:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .card-form {
+    max-width: 100%;
+    gap: 1.125rem;
+  }
+
+  .form-row {
+    gap: 0.75rem;
+  }
+
+  .card-form input {
+    padding: 0.6875rem 1rem;
+    font-size: 1rem;
+  }
+}

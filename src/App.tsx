@@ -2,8 +2,10 @@ import "./App.css";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import InputMask from "react-input-mask";
 import { useState } from "react";
+import CardPreview from "./components/CardPreview";
+import CardForm from "./components/CardForm";
+import SuccessState from "./components/SuccessState";
 
 const schema = yup.object({
   name: yup
@@ -65,7 +67,7 @@ function App() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
-    setSubmited(true);
+    setSubmitted(true);
     // const repsonse = await fetch("api link", {
     //   method: "POST",
     //   "Content-Type": "application/json",
@@ -79,7 +81,7 @@ function App() {
   const yy = watch("yy");
   const cvc = watch("cvc");
 
-  const [submited, setSubmited] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const clearInputs = () => {
     setValue("name", "");
@@ -90,90 +92,34 @@ function App() {
   };
 
   return (
-    <>
-      {submited ? (
-        <div>
-          <h1>Thank You</h1>
-          <button
-            onClick={() => {
-              setSubmited(false);
-              clearInputs();
-            }}
-          >
-            Go back
-          </button>
-        </div>
+    <div className="app-container">
+      {submitted ? (
+        <SuccessState
+          onContinue={() => {
+            setSubmitted(false);
+            clearInputs();
+          }}
+        />
       ) : (
-        <div>
-          <div>
-            <h2>{name || "JANE APPLESEED"}</h2>
-            <h2>{cardNumber || "0000 0000 0000 0000"}</h2>
-            <h2>
-              {mm || "00"} / {yy || "00"}
-            </h2>
-            <h2>{cvc || "000"}</h2>
-          </div>
-
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <label htmlFor="name">CARDHOLDER NAME</label>
-              <input
-                type="text"
-                id="name"
-                placeholder="e.g. Jane Appleseed"
-                {...register("name")}
-              />
-              {errors.name ? <p>{errors.name.message}</p> : null}
-            </div>
-            <div>
-              <label htmlFor="cardNumber">CARD NUMBER</label>
-              <InputMask
-                mask="9999 9999 9999 9999"
-                maskChar=""
-                type="text"
-                id="cardNumber"
-                placeholder="e.g. 1234 5678 9123 0000"
-                {...register("cardNumber")}
-              />
-              {errors.cardNumber ? <p>{errors.cardNumber.message}</p> : null}
-            </div>
-            <div>
-              <label htmlFor="mm">MM</label>
-              <InputMask
-                type="text"
-                id="mm"
-                placeholder="MM"
-                {...register("mm")}
-                mask="99"
-                maskChar=""
-                onBlur={() => {
-                  setValue("mm", mm.padStart(2, "0"));
-                }}
-              />
-              {errors.mm ? <p>{errors.mm.message}</p> : null}
-            </div>
-            <div>
-              <label htmlFor="yy">YY</label>
-              <input type="text" id="yy" placeholder="YY" {...register("yy")} />
-              {errors.yy ? <p>{errors.yy.message}</p> : null}
-            </div>
-            <div>
-              <label htmlFor="cvc">CVC</label>
-              <InputMask
-                type="text"
-                id="cvc"
-                placeholder="CVC"
-                {...register("cvc")}
-                mask="999"
-                maskChar=""
-              />
-              {errors.cvc ? <p>{errors.cvc.message}</p> : null}
-            </div>
-            <button type="submit">Submit</button>
-          </form>
-        </div>
+        <>
+          <CardPreview
+            cardNumber={cardNumber}
+            name={name}
+            mm={mm}
+            yy={yy}
+            cvc={cvc}
+          />
+          <CardForm
+            register={register}
+            errors={errors}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+            setValue={setValue}
+            mm={mm}
+          />
+        </>
       )}
-    </>
+    </div>
   );
 }
 
