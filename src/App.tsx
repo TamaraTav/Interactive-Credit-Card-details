@@ -8,15 +8,25 @@ import CardPreview from "./components/CardPreview";
 import CardForm from "./components/CardForm";
 import SuccessState from "./components/SuccessState";
 
+const defaultValues: Inputs = {
+  name: "",
+  cardNumber: "",
+  mm: "",
+  yy: "",
+  cvc: "",
+};
+
 function App() {
   const {
     register,
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(cardFormSchema),
+    defaultValues,
   });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -38,11 +48,7 @@ function App() {
   const [submitted, setSubmitted] = useState(false);
 
   const clearInputs = () => {
-    setValue("name", "");
-    setValue("cardNumber", "");
-    setValue("mm", "");
-    setValue("yy", "");
-    setValue("cvc", "");
+    reset(defaultValues);
   };
 
   return (
