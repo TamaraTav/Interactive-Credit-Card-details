@@ -39,11 +39,9 @@ function App() {
     // });
   };
 
-  const name = watch("name");
-  const cardNumber = watch("cardNumber");
-  const mm = watch("mm");
-  const yy = watch("yy");
-  const cvc = watch("cvc");
+  // Watch all form fields in a single call for better performance
+  // watch() without arguments returns all form values as an object
+  const { name, cardNumber, mm, yy, cvc } = watch();
 
   const [submitted, setSubmitted] = useState(false);
 
