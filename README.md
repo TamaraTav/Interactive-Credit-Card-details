@@ -105,6 +105,40 @@ This project is based on the Frontend Mentor challenge design. You can view the 
 
 The expiration year validation automatically adjusts based on the current year, ensuring cards are always validated correctly regardless of when the application is used.
 
+## Deployment
+
+This project is configured for deployment on Vercel. The `vercel.json` file contains the deployment configuration.
+
+### Deploying to Vercel
+
+1. Push your code to a Git repository (GitHub, GitLab, or Bitbucket)
+
+2. Import your project on Vercel:
+
+   - Go to [vercel.com](https://vercel.com)
+   - Click "New Project"
+   - Import your Git repository
+
+3. Vercel will automatically detect Vite and configure:
+
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+   - **Install Command**: `npm install`
+
+4. Click "Deploy" and your site will be live!
+
+### Manual Deployment
+
+If you prefer to deploy manually using Vercel CLI:
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
 ## Browser Support
 
 This application works on all modern browsers that support:
