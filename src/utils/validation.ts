@@ -22,9 +22,9 @@ const maxYearYY = getMaxYearYY();
 export const cardFormSchema = yup.object({
   name: yup
     .string()
-    .required("name is required")
-    .min(2, "name must be at least 2 characters")
-    .max(30, "name must be maximum 30 characters")
+    .required("Name is required")
+    .min(2, "Name must be at least 2 characters")
+    .max(30, "Name must be maximum 30 characters")
     .test(
       "includes-space",
       "You should include both first and last names",
@@ -32,24 +32,24 @@ export const cardFormSchema = yup.object({
     ),
   cardNumber: yup
     .string()
-    .required("card number is required")
-    .min(19, "card number must be 16 characters"),
+    .required("Card number is required")
+    .min(19, "Card number must be 16 characters"),
   mm: yup
     .string()
-    .required("mm is required")
-    .min(2, "month must be at least 2 characters")
+    .required("MM is required")
+    .min(2, "Month must be at least 2 characters")
     .test(
       "month validation",
-      "month must be valid",
+      "Month must be valid",
       (value) => parseInt(value) > 0 && parseInt(value) <= 12
     ),
   yy: yup
     .string()
-    .required("yy is required")
-    .min(2, "year must be at least 2 characters")
+    .required("YY is required")
+    .min(2, "Year must be at least 2 characters")
     .test(
       "year validation",
-      `year must be between ${String(currentYearYY).padStart(
+      `Year must be between ${String(currentYearYY).padStart(
         2,
         "0"
       )} and ${String(maxYearYY).padStart(2, "0")}`,
@@ -70,6 +70,6 @@ export const cardFormSchema = yup.object({
     ),
   cvc: yup
     .string()
-    .required("cvc is required")
-    .min(3, "cvc must be at least 3 characters"),
+    .required("CVC is required")
+    .min(3, "CVC must be at least 3 characters"),
 });
