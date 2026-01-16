@@ -32,7 +32,7 @@ function App() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
     setSubmitted(true);
-    // const repsonse = await fetch("api link", {
+    // const response = await fetch("api link", {
     //   method: "POST",
     //   "Content-Type": "application/json",
     //   body: JSON.stringify(data),
