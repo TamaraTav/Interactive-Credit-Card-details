@@ -19,6 +19,49 @@ const getMaxYearYY = () => {
 const currentYearYY = getCurrentYearYY();
 const maxYearYY = getMaxYearYY();
 
+// Luhn Algorithm for credit card number validation
+// The Luhn algorithm is used to validate credit card numbers
+// Steps:
+// 1. Remove all non-digit characters
+// 2. Start from the rightmost digit, move left
+// 3. Double every second digit (starting from second-to-last)
+// 4. If doubling results in two-digit number, subtract 9
+// 5. Sum all digits
+// 6. If sum is divisible by 10, card number is valid
+const luhnCheck = (cardNumber: string): boolean => {
+  // Remove all non-digit characters (spaces, etc.)
+  const digits = cardNumber.replace(/\D/g, "");
+
+  // Card number must be 16 digits
+  if (digits.length !== 16) {
+    return false;
+  }
+
+  // Convert to array of numbers
+  const numbers = digits.split("").map(Number);
+
+  // Start from the rightmost digit, double every second digit
+  // and sum all digits
+  let sum = 0;
+  for (let i = numbers.length - 1; i >= 0; i--) {
+    let digit = numbers[i];
+
+    // Double every second digit from the right
+    if ((numbers.length - 1 - i) % 2 === 1) {
+      digit *= 2;
+      // If result is two-digit, subtract 9 (equivalent to adding digits)
+      if (digit > 9) {
+        digit -= 9;
+      }
+    }
+
+    sum += digit;
+  }
+
+  // Card number is valid if sum is divisible by 10
+  return sum % 10 === 0;
+};
+
 export const cardFormSchema = yup.object({
   name: yup
     .string()
@@ -33,7 +76,11 @@ export const cardFormSchema = yup.object({
   cardNumber: yup
     .string()
     .required("Card number is required")
-    .min(19, "Card number must be 16 characters"),
+    .min(19, "Card number must be 16 characters")
+    .test("luhn-check", "Card number is not valid", (value) => {
+      if (!value) return false;
+      return luhnCheck(value);
+    }),
   mm: yup
     .string()
     .required("MM is required")
